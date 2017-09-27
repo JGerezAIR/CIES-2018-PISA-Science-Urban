@@ -441,3 +441,125 @@ replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
 
 save "`PISApath'Data/PISA_orig_merged_2015_foruse.dta", replace
 
+******************************************************************
+* 																 *
+* Step 5: Conducts 2015 analyses, other variables by urban dummy *
+*																 *
+******************************************************************
+
+*****************************************************
+* Table 3-*: Frequency, science issues, urban dummy *
+*****************************************************
+
+*** Looped command, frequency science issues 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
+
+foreach var in `scienceissues'{
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[4,7], A[1,8], A[2,8], A[4,8], A[1,9], A[2,9], A[4,9])
+			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "coef not urban improve" "SE not urban improve" "coef not urban same" "SE not urban same" "coef not urban worse" "SE not urban worse" "coef urban improve" "SE urban improve" "coef urban same" "SE urban same" "coef urban worse" "SE urban worse" "improve diff" "se improve diff" "p value improve diff" "same diff" "se same diff" "p value same diff" "worse diff" "se worse diff" "p value worse diff"
+			if `num' == 0 { 
+				cap mat drop analysis 
+				mat analysis = b
+			}
+			else {
+				mat analysis = analysis \ b
+			}
+			local ++num 
+	}
+putexcel set "`PISApath'SchoolLocationScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
+******************************************************
+* Table 4-*: Frequency, science beliefs, urban dummy *
+******************************************************
+
+*** Looped command, frequency by science beliefs 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
+
+foreach var in `sciencebeliefs'{
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[1,8], A[2,8], A[1,9], A[2,9], A[4,9], A[1,10], A[2,10], A[4,10], A[1,11], A[2,11], A[4,11], A[1,12], A[2,12], A[4,12])			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "coef not urban strongly disagree" "SE not urban strongly disagree" "coef not urban disagree" "SE not urban disagree" "coef not urban agree" "SE not urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "coef urban strongly disagree" "SE urban strongly disagree" "coef urban disagree" "SE urban disagree" "coef urban agree" "SE urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "strongly disagree diff" "se strongly disagree diff" "p value strongly disagree diff" "disagree diff" "se disagree diff" "p value disagree diff" "agree diff" "se agree diff" "p value agree diff" "strongly agree diff" "se strongly agree diff" "p value strongly agree diff"
+			if `num' == 0 { 	
+				cap mat drop analysis 
+				mat analysis = b
+			}
+			else {
+				mat analysis = analysis \ b
+			}
+			local ++num 
+	}
+putexcel set "`PISApath'SchoolLocationScienceBeliefsTable2015.xls", modify sheet("`var'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
+********************************************************
+* Table 5-*: Frequency, science awareness, urban dummy *
+********************************************************
+
+*** Looped command, frequency by science awareness 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
+
+foreach var in `scienceawareness'{
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[1,8], A[2,8], A[1,9], A[2,9], A[4,9], A[1,10], A[2,10], A[4,10], A[1,11], A[2,11], A[4,11], A[1,12], A[2,12], A[4,12])			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "coef not urban never heard" "SE not urban never heard" "coef not urban cannot explain" "SE not urban cannot explain" "coef not urban familiar" "SE not urban familiar" "coef not urban know something" "SE not urban know something" "coef urban never heard" "SE urban never heard" "coef urban cannot explain" "SE urban cannot explain" "coef urban familiar" "SE urban familiar" "coef not urban know something" "SE not urban know something" "never heard diff" "se never heard diff" "p value never heard diff" "cannot explain diff" "se cannot explain diff" "p value cannot explain diff" "familiar diff" "se familiar diff" "p value familiar diff" "know something diff" "se know something diff" "p value know something diff"
+			if `num' == 0 { 	
+				cap mat drop analysis 
+				mat analysis = b
+			}
+			else {
+				mat analysis = analysis \ b
+			}
+			local ++num 
+	}
+putexcel set "`PISApath'SchoolLocationScienceAwarenessTable2015.xls", modify sheet("`var'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
+
