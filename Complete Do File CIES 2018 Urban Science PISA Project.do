@@ -21,27 +21,10 @@ local PISApath "G:/Conferences/School Location CIES/Data"
 *Step 1:
 
 ***************************************************************************
+* 																		  *
 * Step 1: Append PISA data in order to perform calculations across years  *
+*																		  *
 ***************************************************************************
-
-
-
-
-
-
-
-
-
-********************************************************************
-* This do-file appends PISA data in order to perform calculations  *
-*                      with all years                              *
-********************************************************************
-
-*Created by Julian Gerez
-
-*Set directory
-
-local PISApath "G:/Conferences/School Location CIES/Data"
 
 *******************************************
 * Drop unecessary variables to save space *
@@ -50,28 +33,28 @@ local PISApath "G:/Conferences/School Location CIES/Data"
 *2006
 
 use "`PISApath'/PISA_orig_merged_2006.dta"
-keep cnt schoolid stidstd oecd SC07Q01 PV*MATH PV*READ PV*SCIE W_*
+keep cnt schoolid stidstd oecd SC07Q01 PV*SCIE W_*
 save "`PISApath'/PISA_merged_2006.dta"
 
 *2009
 
 clear
 use "`PISApath'/PISA_orig_merged_2009.dta"
-keep cnt schoolid StIDStd oecd SC04Q01 PV*MATH PV*READ PV*SCIE W_*     
+keep cnt schoolid StIDStd oecd SC04Q01 PV*SCIE W_*     
 save "`PISApath'/PISA_merged_2009.dta"
 
 *2012
 
 clear
 use "`PISApath'/PISA_orig_merged_2012.dta"
-keep cnt schoolid StIDStd oecd SC03Q01 PV*MATH PV*READ PV*SCIE W_*     
+keep cnt schoolid StIDStd oecd SC03Q01 PV*SCIE W_*     
 save "`PISApath'/PISA_merged_2012.dta"
 
 *2015
 
 clear
 use "`PISApath'/PISA_orig_merged_2015.dta"
-keep cnt cntschid cntstuid oecd SC001Q01TA PV*MATH PV*READ PV*SCIE W_*
+keep cnt cntschid cntstuid oecd SC001Q01TA PV*SCIE W_*
 save "`PISApath'/PISA_merged_2015.dta"
 
 **********************************************************
