@@ -444,20 +444,24 @@ replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
 
 local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
+* 1 = disagree or strongly disagree
+* 2 = agree or strongly agree
+
 foreach var in `sciencebeliefs' {
 	gen `var'_condensed = .
 	replace `var'_condensed = 1 if `var' == 1 | `var' == 2
 	replace `var'_condensed = 2 if `var' == 3 | `var' == 4
-	label define `var'_condensed 1 "Disagree or Strongly Disagree" 2 "Agree or Strongly Agree"
 }
 
 local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
+
+* 1 = low familiarity
+* 2 = high familiarity
 
 foreach var in `scienceawareness' {
 	gen `var'_condensed = .
 	replace `var'_condensed = 1 if `var' == 1 | `var' == 2
 	replace `var'_condensed = 2 if `var' == 3 | `var' == 4
-	label define `var'_condensed 1 "Low familiarity" 2 "High familiarity"
 }	
 
 * Save new file
