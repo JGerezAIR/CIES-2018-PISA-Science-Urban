@@ -18,7 +18,7 @@ local PISApath "G:/Conferences/School Location CIES/Data"
 * Index *
 *********
 
-*Step 1:
+* Step 1:
 
 ***************************************************************************
 * 																		  *
@@ -109,3 +109,9 @@ foreach file in `j' {
 
 save "`PISApath'/PISA_merged_allyears.dta"
 export delimited using "`PISApath'/PISA_merged_allyears.csv", replace
+
+***************************************************************************
+* 																		  *
+* Step 2: Append PISA data in order to perform calculations across years  *
+*																		  *
+***************************************************************************
