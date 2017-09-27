@@ -417,7 +417,7 @@ use "`PISApath'Data/PISA_orig_merged_2015.dta"
 
 rename *, lower
 
-*Create dummy variables for each category of school location
+* Create dummy variables for each category of school location
 
 gen village_dummy = 0
 replace village_dummy = 1 if sc001q01ta == 1
@@ -434,11 +434,15 @@ replace city_dummy = 1 if sc001q01ta == 4
 gen largecity_dummy = 0
 replace largecity_dummy = 1 if sc001q01ta == 5
 
-*Create "urban" dummy variable
+* Create "urban" dummy variable
 
 gen urban_dummy = .
 replace urban_dummy = 1 if sc001q01ta == 4 | sc001q01ta == 5
 replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
+
+* Create condensed versions of other variables
+
+gen 
 
 * Save new file
 
