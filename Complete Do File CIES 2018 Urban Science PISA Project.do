@@ -219,3 +219,225 @@ rename cntrid cntryid
 
 save "`PISApath'/PISA_merged_allyears_foruse.dta", replace
 
+*****************************************************************
+* 																*
+* Step 3: Performs analyses, urban distribution and performance *
+*																*
+*****************************************************************
+
+clear
+
+local PISApath "G:/Conferences/School Location CIES/"
+
+use "`PISApath'/PISA_merged_allyears_foruse.dta"
+
+***********************************************************
+* Table 1-a: Percentage distribution of urban dummy, 2015 *
+***********************************************************
+
+*** Looped command, percent distrbution 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local num = 0
+
+foreach i of local cntryidlvls {
+	repest PISA2015 if year==2015 & cntryid==`i', estimate(freq urban_dummy) flag
+	*Return list
+		cap mat list r(table)
+		cap mat drop A
+		qui mat A = r(table)
+		
+		*Coefficients
+		cap mat drop b
+		qui mat b = (A[1,1] , A[2,1], A[1,2], A[2,2])
+		
+		*Mat list b
+		qui mat rown b = `i'
+		qui mat coln b = "% not urban" "SE not urban" "% urban" "SE urban"
+		qui if `num' == 0 {
+			cap mat drop analysis
+			mat analysis = b
+		}
+		
+		qui else {
+			mat analysis = analysis \ b
+		}
+		
+		local ++num
+}
+
+putexcel set "`PISApath'UrbanDummyPercentTables.xls", modify sheet("Urban Dummy 2015", replace) 
+putexcel A1 = matrix(analysis, names)
+
+****************************************************************
+* Table 1-b,c,d: Percentage distribution urban dummy, pre 2015 *
+****************************************************************
+
+*** Looped command, percent distribution pre 2015 ***
+
+local j 2012 2009 2006
+levelsof cntryid, local(cntryidlvls)
+
+foreach year in `j' {
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA if year==`year' & cntryid==`i', estimate(freq urban_dummy) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1] , A[2,1], A[1,2], A[2,2])
+			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "% not urban" "SE not urban" "% urban" "SE urban"
+			qui if `num' == 0 {
+				cap mat drop analysis
+				mat analysis = b
+			}
+			
+			qui else {
+				mat analysis = analysis \ b
+			}
+			
+			local ++num
+		}
+
+putexcel set "`PISApath'UrbanDummyPercentTables.xls", modify sheet("Urban Dummy `year'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
+*******************************************************
+* Table 2-a: Science performance by urban dummy, 2015 *
+*******************************************************
+
+*** Looped command, science performance 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local num = 0
+
+foreach i of local cntryidlvls {
+	repest PISA2015 if year==2015 & cntryid==`i', estimate(summarize pv@scie, stats(mean)) over (urban_dummy, test) flag
+	*Return list
+		cap mat list r(table)
+		cap mat drop A
+		qui mat A = r(table)
+		
+		*Coefficients
+		cap mat drop b
+		qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[4,3])
+		
+		*Mat list b
+		qui mat rown b = `i'
+		qui mat coln b = "coef not urban" "SE not urban" "coef urban" "se urban" "diff" "se diff" "p-value"
+		qui if `num' == 0 {
+			cap mat drop analysis
+			mat analysis = b
+		}
+		
+		qui else {
+			mat analysis = analysis \ b
+		}
+		
+		local ++num
+	}
+
+putexcel set "`PISApath'UrbanDummySciencePerformanceTables.xls", modify sheet("Urban Dummy 2015", replace) 
+putexcel A1 = matrix(analysis, names)
+
+***************************************************************
+* Table 2-b,c,d: Science performance by urban dummy, pre 2015 *
+***************************************************************
+
+*** Looped command, science performance pre-2015 ***
+
+local j 2012 2009 2006
+levelsof cntryid, local(cntryidlvls)
+
+
+foreach year in `j' {
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA if year==`year' & cntryid==`i', estimate(summarize pv@scie, stats(mean)) over (urban_dummy, test) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[4,3])
+			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "coef not urban" "SE not urban" "coef urban" "se urban" "diff" "se diff" "p-value"
+
+			qui if `num' == 0 {
+				cap mat drop analysis
+				mat analysis = b
+			}
+			
+			qui else {
+				mat analysis = analysis \ b
+			}
+			
+			local ++num
+		}
+
+putexcel set "`PISApath'UrbanDummySciencePerformanceTables.xls", modify sheet("Urban Dummy `year'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
+
+******************************************************************
+* 																 *
+* Step 4: Sets up 2015 analyses, other variables by urban dummy  *
+*																 *
+******************************************************************
+
+clear
+
+set matsize 11000
+
+local PISApath "G:/Conferences/School Location CIES/"
+
+* Read-in data file
+
+use "`PISApath'Data/PISA_orig_merged_2015.dta"
+
+* Make all variables lowercase
+
+rename *, lower
+
+*Create dummy variables for each category of school location
+
+gen village_dummy = 0
+replace village_dummy = 1 if sc001q01ta == 1
+
+gen smalltown_dummy = 0
+replace smalltown_dummy = 1 if sc001q01ta == 2
+
+gen town_dummy = 0
+replace town_dummy = 1 if sc001q01ta == 3
+
+gen city_dummy = 0
+replace city_dummy = 1 if sc001q01ta == 4
+
+gen largecity_dummy = 0
+replace largecity_dummy = 1 if sc001q01ta == 5
+
+*Create "urban" dummy variable
+
+gen urban_dummy = .
+replace urban_dummy = 1 if sc001q01ta == 4 | sc001q01ta == 5
+replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
+
+* Save new file
+
+save "`PISApath'Data/PISA_orig_merged_2015_foruse.dta", replace
+
