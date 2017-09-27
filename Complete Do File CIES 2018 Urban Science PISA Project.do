@@ -20,6 +20,9 @@ local PISApath "G:/Conferences/School Location CIES/Data"
 
 * Step 1:
 * Step 2:
+* Step 3:
+* Step 4:
+* Step 5:
 
 ***************************************************************************
 * 																		  *
@@ -481,7 +484,7 @@ foreach var in `scienceissues'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
@@ -519,7 +522,7 @@ foreach var in `sciencebeliefs'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceBeliefsTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceBeliefsCondensedTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
@@ -557,7 +560,7 @@ foreach var in `scienceawareness'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceAwarenessTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceAwarenessCondensedTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
