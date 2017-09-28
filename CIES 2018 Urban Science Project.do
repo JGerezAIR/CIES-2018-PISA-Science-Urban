@@ -449,8 +449,8 @@ local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st13
 
 foreach var in `sciencebeliefs' {
 	gen `var'_condensed = .
-	replace `var'_condensed = 1 if `var' == 1 | `var' == 2
-	replace `var'_condensed = 2 if `var' == 3 | `var' == 4
+	replace `var'_condensed = 0 if `var' == 1 | `var' == 2
+	replace `var'_condensed = 1 if `var' == 3 | `var' == 4
 }
 
 local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
@@ -460,8 +460,8 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 
 foreach var in `scienceawareness' {
 	gen `var'_condensed = .
-	replace `var'_condensed = 1 if `var' == 1 | `var' == 2
-	replace `var'_condensed = 2 if `var' == 3 | `var' == 4
+	replace `var'_condensed = 0 if `var' == 1 | `var' == 2
+	replace `var'_condensed = 1 if `var' == 3 | `var' == 4
 }	
 
 * Save new file
@@ -595,4 +595,11 @@ putexcel A1 = matrix(analysis, names)
 
 }
 
+********************************
+* 							   *
+* Step 6: Regression analysis  *
+*							   *
+********************************
+
+*** Looped command, 
 
