@@ -462,6 +462,18 @@ foreach var in `scienceawareness' {
 	gen `var'_condensed = .
 	replace `var'_condensed = 0 if `var' == 1 | `var' == 2
 	replace `var'_condensed = 1 if `var' == 3 | `var' == 4
+}
+
+local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
+
+* 0 = get worse
+* 1 = improve
+
+foreach var in `scienceissues'
+	gen `var'_binary = .
+	replace `var'_binary = 0 if `var' == 3
+	replace `var'_binary = 1 if `var' == 1
+	replace `var'_binary = . if `var' == 2
 }	
 
 * Save new file
