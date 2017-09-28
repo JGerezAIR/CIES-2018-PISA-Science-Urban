@@ -520,7 +520,7 @@ foreach var in `scienceissues'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
@@ -558,7 +558,7 @@ foreach var in `sciencebeliefs'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceBeliefsTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceBeliefsTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
@@ -596,7 +596,7 @@ foreach var in `scienceawareness'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'SchoolLocationScienceAwarenessTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceAwarenessTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
