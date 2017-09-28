@@ -13,6 +13,7 @@ set matsize 11000
 * Set directory
 
 local PISApath "G:/Conferences/School Location CIES/Data"
+cd "`PISApath'"
 
 * Install necessary packages
 
@@ -448,8 +449,8 @@ replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
 
 local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
-* 1 = disagree or strongly disagree
-* 2 = agree or strongly agree
+* 0 = disagree or strongly disagree
+* 1 = agree or strongly agree
 
 foreach var in `sciencebeliefs' {
 	gen `var'_condensed = .
@@ -459,8 +460,8 @@ foreach var in `sciencebeliefs' {
 
 local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
 
-* 1 = low familiarity
-* 2 = high familiarity
+* 0 = low familiarity
+* 1 = high familiarity
 
 foreach var in `scienceawareness' {
 	gen `var'_condensed = .
@@ -749,8 +750,13 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie
-		cap outreg2 using
+		local lb: label (cntryid)
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
+		cap outreg2 using `PISApath'UrbanScienceAwarenessLogRegTable`var'2015.xlsx, ctitle("`lb'")
+	}
+}
+		
+
 
 foreach l of local lvs { 
 	dis `l'
