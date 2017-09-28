@@ -526,12 +526,12 @@ putexcel A1 = matrix(analysis, names)
 *** Looped command, frequency by science beliefs 2015 ***
 
 levelsof cntryid, local(cntryidlvls)
-local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
+local sciencebeliefs_condensed st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
 foreach var in `sciencebeliefs'{
 	local num = 0
 	foreach i of local cntryidlvls {
-		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		repest PISA2015 if cntryid==`i', estimate(freq `var'_condensed) over (urban_dummy, test) flag
 		*Return list
 			cap mat list r(table)
 			cap mat drop A
@@ -566,10 +566,10 @@ putexcel A1 = matrix(analysis, names)
 levelsof cntryid, local(cntryidlvls)
 local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
 
-foreach var in `scienceawareness'{
+foreach var in `scienceawareness' {
 	local num = 0
 	foreach i of local cntryidlvls {
-		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		repest PISA2015 if cntryid==`i', estimate(freq `var'_condensed) over (urban_dummy, test) flag
 		*Return list
 			cap mat list r(table)
 			cap mat drop A
