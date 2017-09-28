@@ -18,11 +18,11 @@ local PISApath "G:/Conferences/School Location CIES/Data"
 * Index *
 *********
 
-* Step 1:
-* Step 2:
-* Step 3:
-* Step 4:
-* Step 5:
+* Step 1: Line 27 - Append PISA data
+* Step 2: Line 117 - All years prep file
+* Step 3: Line 225 - Urban distribution and performance
+* Step 4: Line 400 - Prep file for other science variables, 2015
+* Step 5: Line 471 - Urban variable and other science variables analyses, 2015
 
 ***************************************************************************
 * 																		  *
@@ -519,9 +519,9 @@ putexcel A1 = matrix(analysis, names)
 
 }
 
-******************************************************
-* Table 4-*: Frequency, science beliefs, urban dummy *
-******************************************************
+*****************************************************************
+* Table 4-*: Frequency, science beliefs, urban dummy, condensed *
+*****************************************************************
 
 *** Looped command, frequency by science beliefs 2015 ***
 
@@ -557,9 +557,9 @@ putexcel A1 = matrix(analysis, names)
 
 }
 
-********************************************************
-* Table 5-*: Frequency, science awareness, urban dummy *
-********************************************************
+*******************************************************************
+* Table 5-*: Frequency, science awareness, urban dummy, condensed *
+*******************************************************************
 
 *** Looped command, frequency by science awareness 2015 ***
 
