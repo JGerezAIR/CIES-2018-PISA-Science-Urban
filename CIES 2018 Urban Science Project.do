@@ -614,9 +614,9 @@ local PISApath "G:/Conferences/School Location CIES/"
 
 use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
 
-*****************************************************
-* Table 3-*: Frequency, science issues, urban dummy *
-*****************************************************
+****************************************************************
+* Table 6-*: Frequency, science issues, urban dummy, condensed *
+****************************************************************
 
 *** Looped command, frequency science issues 2015 ***
 
@@ -626,7 +626,7 @@ local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093
 foreach var in `scienceissues'{
 	local num = 0
 	foreach i of local cntryidlvls {
-		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		repest PISA2015 if cntryid==`i', estimate(freq `var'_binary) over (urban_dummy, test) flag
 		*Return list
 			cap mat list r(table)
 			cap mat drop A
@@ -634,12 +634,11 @@ foreach var in `scienceissues'{
 			
 			*Coefficients
 			cap mat drop b
-			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[4,7], A[1,8], A[2,8], A[4,8], A[1,9], A[2,9], A[4,9])
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[4,5])
 			
 			*Mat list b
 			qui mat rown b = `i'
-			qui mat coln b = "coef not urban improve" "SE not urban improve" "coef not urban same" "SE not urban same" "coef not urban worse" "SE not urban worse" "coef urban improve" "SE urban improve" "coef urban same" "SE urban same" "coef urban worse" "SE urban worse" "improve diff" "se improve diff" "p value improve diff" "same diff" "se same diff" "p value same diff" "worse diff" "se worse diff" "p value worse diff"
-			if `num' == 0 { 
+			qui mat coln b = "coef not urban worse" "SE not urban worse" "coef not urban improve" "SE not urban improve" "coef urban worse" "SE urban worse" "coef urban improve" "SE urban improve" "diff" "diff se" "p value" 
 				cap mat drop analysis 
 				mat analysis = b
 			}
@@ -648,13 +647,13 @@ foreach var in `scienceissues'{
 			}
 			local ++num 
 	}
-putexcel set "`PISApath'UrbanScienceIssuesTable2015.xls", modify sheet("`var'", replace) 
+putexcel set "`PISApath'UrbanScienceIssuesCondensedTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
 }
 
 *****************************************************************
-* Table 4-*: Frequency, science beliefs, urban dummy, condensed *
+* Table 7-*: Frequency, science beliefs, urban dummy, condensed *
 *****************************************************************
 
 *** Looped command, frequency by science beliefs 2015 ***
@@ -692,7 +691,7 @@ putexcel A1 = matrix(analysis, names)
 }
 
 *******************************************************************
-* Table 5-*: Frequency, science awareness, urban dummy, condensed *
+* Table 8-*: Frequency, science awareness, urban dummy, condensed *
 *******************************************************************
 
 *** Looped command, frequency by science awareness 2015 ***
