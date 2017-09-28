@@ -14,6 +14,11 @@ set matsize 11000
 
 local PISApath "G:/Conferences/School Location CIES/Data"
 
+* Install necessary packages
+
+ssc install repest
+ssc install outreg2
+
 *********
 * Index *
 *********
@@ -127,7 +132,6 @@ export delimited using "`PISApath'/PISA_merged_allyears.csv", replace
 * In order to use this file, you must have:
   *1) Merged PISA 2006-2015 file (this file is created in step 1)
   *2) PISA Country Crosswalk for 2006-2015 saved as .dta
-  *3) install repest package (occurs in this do-file, but don't forget it!)
 
 clear
 local PISApath "G:/Conferences/School Location CIES/"
@@ -734,5 +738,32 @@ putexcel A1 = matrix(analysis, names)
 *							   *
 ********************************
 
-*** Looped command, 
+********************************************************************
+* Table 9-*: Regression, science awareness, urban dummy, condensed *
+********************************************************************
+
+*** Looped command, science awareness control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
+
+foreach var in `scienceawareness' {
+	foreach i of local cntryidlvls {
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie
+		cap outreg2 using
+
+foreach l of local lvs { 
+	dis `l'
+	local lb : label (cntryid)`l'
+	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2, robust)
+	cap outreg2 using table4-a-1.xls, ctitle("`lb'")  
+	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2, robust)
+	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
+	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t, robust)
+	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
+	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t escs, robust)
+	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
+	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t escs pv@math pv@read, robust)
+	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
+	}
 
