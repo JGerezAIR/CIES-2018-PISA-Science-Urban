@@ -577,10 +577,10 @@ foreach var in `scienceawareness' {
 			
 			*Coefficients
 			cap mat drop b
-			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[1,8], A[2,8], A[1,9], A[2,9], A[4,9], A[1,10], A[2,10], A[4,10], A[1,11], A[2,11], A[4,11], A[1,12], A[2,12], A[4,12])			
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[4,5])
 			*Mat list b
 			qui mat rown b = `i'
-			qui mat coln b = "coef not urban never heard" "SE not urban never heard" "coef not urban cannot explain" "SE not urban cannot explain" "coef not urban familiar" "SE not urban familiar" "coef not urban know something" "SE not urban know something" "coef urban never heard" "SE urban never heard" "coef urban cannot explain" "SE urban cannot explain" "coef urban familiar" "SE urban familiar" "coef not urban know something" "SE not urban know something" "never heard diff" "se never heard diff" "p value never heard diff" "cannot explain diff" "se cannot explain diff" "p value cannot explain diff" "familiar diff" "se familiar diff" "p value familiar diff" "know something diff" "se know something diff" "p value know something diff"
+			qui mat coln b = "coef not urban unfamiliar" "SE not urban unfamiliar" "coef not urban familiar" "SE not urban familiar" "coef urban unfamiliar" "SE urban unfamiliar" "coef urban familiar" "SE urban familiar" "diff" "se diff" "p value diff"
 			if `num' == 0 { 	
 				cap mat drop analysis 
 				mat analysis = b
