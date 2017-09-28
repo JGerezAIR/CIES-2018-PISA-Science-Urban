@@ -526,7 +526,7 @@ putexcel A1 = matrix(analysis, names)
 *** Looped command, frequency by science beliefs 2015 ***
 
 levelsof cntryid, local(cntryidlvls)
-local sciencebeliefs_condensed st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
+local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
 foreach var in `sciencebeliefs'{
 	local num = 0
@@ -539,10 +539,10 @@ foreach var in `sciencebeliefs'{
 			
 			*Coefficients
 			cap mat drop b
-			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[1,8], A[2,8], A[1,9], A[2,9], A[4,9], A[1,10], A[2,10], A[4,10], A[1,11], A[2,11], A[4,11], A[1,12], A[2,12], A[4,12])			
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[4,5])			
 			*Mat list b
 			qui mat rown b = `i'
-			qui mat coln b = "coef not urban strongly disagree" "SE not urban strongly disagree" "coef not urban disagree" "SE not urban disagree" "coef not urban agree" "SE not urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "coef urban strongly disagree" "SE urban strongly disagree" "coef urban disagree" "SE urban disagree" "coef urban agree" "SE urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "strongly disagree diff" "se strongly disagree diff" "p value strongly disagree diff" "disagree diff" "se disagree diff" "p value disagree diff" "agree diff" "se agree diff" "p value agree diff" "strongly agree diff" "se strongly agree diff" "p value strongly agree diff"
+			qui mat coln b = "coef not urban disagree" "SE not urban disagree" "coef not urban agree" "SE not urban agree" "coef urban disagree" "SE urban disagree" "coef urban agree" "SE urban agree" "diff" "se diff" "p value diff"
 			if `num' == 0 { 	
 				cap mat drop analysis 
 				mat analysis = b
