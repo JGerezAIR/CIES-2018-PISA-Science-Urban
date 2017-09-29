@@ -495,7 +495,7 @@ clear
 
 local PISApath "G:/Conferences/School Location CIES/Data"
 
-use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
+use "`PISApath'/PISA_orig_merged_2015_foruse.dta"
 
 *******************************************************************
 * Table 3-*: School location results, science issues, urban dummy *
@@ -623,7 +623,7 @@ clear
 
 local PISApath "G:/Conferences/School Location CIES/"
 
-use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
+use "`PISApath'/PISA_orig_merged_2015_foruse.dta"
 
 ****************************************************************
 * Table 6-*: Frequency, science issues, urban dummy, condensed *
