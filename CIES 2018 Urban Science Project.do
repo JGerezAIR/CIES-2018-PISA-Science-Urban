@@ -750,26 +750,9 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
-		local lb: label (cntryid)
+		local lb : label (cntryid)`i'
 		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
-		cap outreg2 using `PISApath'UrbanScienceAwarenessLogRegTable`var'2015.xlsx, ctitle("`lb'")
+		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xlsx, ctitle("`lb'")
 	}
 }
-		
-
-
-foreach l of local lvs { 
-	dis `l'
-	local lb : label (cntryid)`l'
-	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2, robust)
-	cap outreg2 using table4-a-1.xls, ctitle("`lb'")  
-	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2, robust)
-	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
-	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t, robust)
-	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
-	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t escs, robust)
-	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
-	repest PISA2015 if cntryid==`l' , estimate(stata: reg pv@flit fincar_self_v2 fincar_eitherpas_v2 st004d01t escs pv@math pv@read, robust)
-	cap outreg2 using table4-a-1.xls, ctitle("`lb'") 
-	}
 
