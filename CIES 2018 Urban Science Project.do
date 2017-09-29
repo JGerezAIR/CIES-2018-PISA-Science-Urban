@@ -856,7 +856,7 @@ local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st13
 foreach var in `sciencebeliefs' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceBeliefsLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -869,7 +869,7 @@ local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st13
 foreach var in `sciencebeliefs' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceBeliefsProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
