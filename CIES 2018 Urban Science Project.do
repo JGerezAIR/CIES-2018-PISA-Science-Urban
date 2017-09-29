@@ -756,3 +756,19 @@ foreach var in `scienceawareness' {
 	}
 }
 
+******************************************************************
+* Table 10-*: Regression, science issues, urban dummy, condensed *
+******************************************************************
+
+levelsof cntryid, local(cntryidlvls)
+local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
+
+foreach var in `scienceissues' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
+		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xlsx, ctitle("`lb'")
+	}
+}
+
+
