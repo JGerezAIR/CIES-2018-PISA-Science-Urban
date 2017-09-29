@@ -491,6 +491,10 @@ save "`PISApath'Data/PISA_orig_merged_2015_foruse.dta", replace
 *																 *
 ******************************************************************
 
+clear
+
+use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
+
 *******************************************************************
 * Table 3-*: School location results, science issues, urban dummy *
 *******************************************************************
