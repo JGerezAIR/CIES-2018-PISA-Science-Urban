@@ -758,7 +758,7 @@ foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
 		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
-		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xlsx, ctitle("`lb'")
+		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
@@ -773,7 +773,7 @@ foreach var in `scienceissues' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
 		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
-		cap outreg2 using UrbanScienceIssuesLogRegTable`var'2015.xlsx, ctitle("`lb'")
+		cap outreg2 using UrbanScienceIssuesLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
@@ -788,7 +788,7 @@ foreach var in `sciencebeliefs' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
 		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
-		cap outreg2 using UrbanScienceBeliefsLogRegTable`var'2015.xlsx, ctitle("`lb'")
+		cap outreg2 using UrbanScienceBeliefsLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
