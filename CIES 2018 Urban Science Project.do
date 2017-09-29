@@ -741,7 +741,7 @@ putexcel A1 = matrix(analysis, names)
 
 ********************************
 * 							   *
-* Step 6: Regression analysis  *
+* Step 6: Regression analyses  *
 *							   *
 ********************************
 
@@ -749,7 +749,7 @@ putexcel A1 = matrix(analysis, names)
 * Table 9-*: Regression, science awareness, urban dummy, condensed *
 ********************************************************************
 
-*** Looped command, science awareness control for performance ***
+*** Looped command, linear science awareness control for performance ***
 
 levelsof cntryid, local(cntryidlvls)
 local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
@@ -757,8 +757,34 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: reg `var'_condensed pv@scie urban_dummy, robust)
+		cap outreg2 using UrbanScienceAwarenessLinRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
+
+*** Looped command, logistic science awareness control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
+
+foreach var in `scienceawareness' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
 		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
+
+*** Looped command, probit science awareness control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st092q08na st092q09na
+
+foreach var in `scienceawareness' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		cap outreg2 using UrbanScienceAwarenessProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
@@ -766,14 +792,42 @@ foreach var in `scienceawareness' {
 * Table 10-*: Regression, science issues, urban dummy, condensed *
 ******************************************************************
 
+*** Looped command, linear science issues control for performance ***
+
 levelsof cntryid, local(cntryidlvls)
 local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
 
 foreach var in `scienceissues' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: reg `var'_condensed pv@scie urban_dummy, robust)
+		cap outreg2 using UrbanScienceIssuesLinRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
+
+*** Looped command, logistic science issues control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
+
+foreach var in `scienceissues' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
 		cap outreg2 using UrbanScienceIssuesLogRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
+
+*** Looped command, probit science awareness control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093q07na st093q08na
+
+foreach var in `scienceissues' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		cap outreg2 using UrbanScienceIssuesProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
@@ -781,17 +835,41 @@ foreach var in `scienceissues' {
 * Table 11-*: Regression, science beliefs, urban dummy, condensed *
 *******************************************************************
 
+*** Looped command, linear science beliefs control for performance ***
+
 levelsof cntryid, local(cntryidlvls)
 local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
 foreach var in `sciencebeliefs' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: reg `var'_condensed pv@scie urban_dummy, robust)
+		cap outreg2 using UrbanScienceBeliefsLinRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
+
+*** Looped command, logistic science beliefs control for performance ***
+
+levelsof cntryid, local(cntryidlvls)
+local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
+
+foreach var in `sciencebeliefs' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
 		cap outreg2 using UrbanScienceBeliefsLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
 
+*** Looped command, probit science beliefs control for performance ***
 
+levelsof cntryid, local(cntryidlvls)
+local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
-
+foreach var in `sciencebeliefs' {
+	foreach i of local cntryidlvls {
+		local lb : label (cntryid)`i'
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		cap outreg2 using UrbanScienceBeliefsProbRegTable`var'2015.xls, ctitle("`lb'")
+	}
+}
