@@ -770,7 +770,7 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceAwarenessLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -783,7 +783,7 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceAwarenessProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -813,7 +813,7 @@ local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093
 foreach var in `scienceissues' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: logistic `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceIssuesLogRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -826,7 +826,7 @@ local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093
 foreach var in `scienceissues' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust margins)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, or robust)
 		cap outreg2 using UrbanScienceIssuesProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
