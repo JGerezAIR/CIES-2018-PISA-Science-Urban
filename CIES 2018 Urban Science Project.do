@@ -493,6 +493,8 @@ save "`PISApath'Data/PISA_orig_merged_2015_foruse.dta", replace
 
 clear
 
+local PISApath "G:/Conferences/School Location CIES/Data"
+
 use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
 
 *******************************************************************
