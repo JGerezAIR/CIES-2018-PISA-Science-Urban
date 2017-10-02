@@ -783,7 +783,7 @@ local scienceawareness st092q01ta st092q02ta st092q04ta st092q05ta st092q06na st
 foreach var in `scienceawareness' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, or robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust)
 		cap outreg2 using UrbanScienceAwarenessProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -826,7 +826,7 @@ local scienceissues st093q01ta st093q03ta st093q04ta st093q05ta st093q06ta st093
 foreach var in `scienceissues' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_binary pv@scie urban_dummy, or robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_binary pv@scie urban_dummy, robust)
 		cap outreg2 using UrbanScienceIssuesProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
@@ -869,7 +869,7 @@ local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st13
 foreach var in `sciencebeliefs' {
 	foreach i of local cntryidlvls {
 		local lb : label (cntryid)`i'
-		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, or robust)
+		repest PISA2015 if cntryid==`i', estimate(stata: probit `var'_condensed pv@scie urban_dummy, robust)
 		cap outreg2 using UrbanScienceBeliefsProbRegTable`var'2015.xls, ctitle("`lb'")
 	}
 }
