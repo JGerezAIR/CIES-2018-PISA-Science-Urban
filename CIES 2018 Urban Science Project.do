@@ -621,6 +621,8 @@ putexcel A1 = matrix(analysis, names)
 
 clear
 
+set more off
+
 local PISApath "G:/Conferences/School Location CIES/"
 
 use "`PISApath'/PISA_orig_merged_2015_foruse.dta"
