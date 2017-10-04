@@ -625,7 +625,7 @@ set more off
 
 local PISApath "G:/Conferences/School Location CIES/"
 
-use "`PISApath'/PISA_orig_merged_2015_foruse.dta"
+use "`PISApath'Data/PISA_orig_merged_2015_foruse.dta"
 
 ****************************************************************
 * Table 6-*: Frequency, science issues, urban dummy, condensed *

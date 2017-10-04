@@ -1,0 +1,13 @@
+	(1)
+VARIABLES	Australia
+	
+st093q04ta_binary_pv_scie	-0.00191***
+	(0.000205)
+st093q04ta_binary_urban_du_y	0.0508
+	(0.0471)
+st093q04ta_binary__cons	-0.327***
+	(0.0999)
+	
+Observations	.
+Standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	
