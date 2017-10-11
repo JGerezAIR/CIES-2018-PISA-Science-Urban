@@ -647,11 +647,12 @@ foreach var in `scienceissues'{
 			
 			*Coefficients
 			cap mat drop b
-			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[4,5])
+			 mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[4,5])
 			
 			*Mat list b
 			qui mat rown b = `i'
 			qui mat coln b = "coef not urban worse" "SE not urban worse" "coef not urban improve" "SE not urban improve" "coef urban worse" "SE urban worse" "coef urban improve" "SE urban improve" "diff" "diff se" "p value" 
+			if `num' == 0 {
 				cap mat drop analysis 
 				mat analysis = b
 			}
@@ -659,7 +660,7 @@ foreach var in `scienceissues'{
 				mat analysis = analysis \ b
 			}
 			local ++num 
-	}
+	}	
 putexcel set "`PISApath'UrbanScienceIssuesCondensedTable2015.xls", modify sheet("`var'", replace) 
 putexcel A1 = matrix(analysis, names)
 
