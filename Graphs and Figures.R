@@ -17,3 +17,7 @@ percent <- read.csv(paste0(directory, 'Urban Percentages.csv'))
 mean_pct_urban <- mean(percent[["pct_urban"]], na.rm=TRUE)
 mean_pct_noturban <- mean(percent[["pct_noturban"]], na.rm=TRUE)
 
+# Performance
+
+performance <- read.csv(paste0(directory, 'Urban Performance.csv'))
+
