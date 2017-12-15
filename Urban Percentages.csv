@@ -1,4 +1,4 @@
-Country Label,Country ID,% not urban,SE not urban,% urban,SE urban,Year
+country_lb,country_id,pct_noturban,se_noturban,pct_urban,se_urban,year
 ALB,8,67.99011548,3.675252159,32.00988452,3.675252159,2015
 DZA,12,83.05106978,2.849088077,16.94893022,2.849088077,2015
 AZE,31,,,,,2015
