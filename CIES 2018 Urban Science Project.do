@@ -447,6 +447,17 @@ replace urban_dummy = 0 if sc001q01ta == 1 | sc001q01ta == 2 | sc001q01ta == 3
 
 * Create condensed versions of other variables
 
+local scienceattitudes st094q01na st094q02na st094q03na st094q04na st094q05na
+
+* 0 = disagree or strongly disagree
+* 1 = agree or strongly agree
+
+foreach var in `scienceattitudes' {
+	gen `var'_condensed = .
+	replace `var'_condensed = 0 if `var' == 1 | `var' == 2
+	replace `var'_condensed = 1 if `var' == 3 | `var' == 4
+}
+
 local sciencebeliefs st131q01na st131q03na st131q04na st131q06na st131q08na st131q11na
 
 * 0 = disagree or strongly disagree
@@ -536,8 +547,46 @@ putexcel A1 = matrix(analysis, names)
 
 }
 
+**********************************************************************
+* Table 4-*: School location results, science attitudes, urban dummy *
+**********************************************************************
+
+*** Looped command, science performance by science attitudes 2015 ***
+
+levelsof cntryid, local(cntryidlvls)
+local scienceattitudes st094q01na st094q02na st094q03na st094q04na st094q05na
+
+foreach var in `scienceattitudes'{
+	local num = 0
+	foreach i of local cntryidlvls {
+		repest PISA2015 if cntryid==`i', estimate(freq `var') over (urban_dummy, test) flag
+		*Return list
+			cap mat list r(table)
+			cap mat drop A
+			qui mat A = r(table)
+			
+			*Coefficients
+			cap mat drop b
+			qui mat b = (A[1,1], A[2,1], A[1,2], A[2,2], A[1,3], A[2,3], A[1,4], A[2,4], A[1,5], A[2,5], A[1,6], A[2,6], A[1,7], A[2,7], A[1,8], A[2,8], A[1,9], A[2,9], A[4,9], A[1,10], A[2,10], A[4,10], A[1,11], A[2,11], A[4,11], A[1,12], A[2,12], A[4,12])			
+			*Mat list b
+			qui mat rown b = `i'
+			qui mat coln b = "coef not urban strongly disagree" "SE not urban strongly disagree" "coef not urban disagree" "SE not urban disagree" "coef not urban agree" "SE not urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "coef urban strongly disagree" "SE urban strongly disagree" "coef urban disagree" "SE urban disagree" "coef urban agree" "SE urban agree" "coef not urban strongly agree" "SE not urban strongly agree" "strongly disagree diff" "se strongly disagree diff" "p value strongly disagree diff" "disagree diff" "se disagree diff" "p value disagree diff" "agree diff" "se agree diff" "p value agree diff" "strongly agree diff" "se strongly agree diff" "p value strongly agree diff"
+			if `num' == 0 { 	
+				cap mat drop analysis 
+				mat analysis = b
+			}
+			else {
+				mat analysis = analysis \ b
+			}
+			local ++num 
+	}
+putexcel set "`PISApath'UrbanScienceAttitudesTable2015.xls", modify sheet("`var'", replace) 
+putexcel A1 = matrix(analysis, names)
+
+}
+
 ********************************************************************
-* Table 4-*: School location results, science beliefs, urban dummy *
+* Table 5-*: School location results, science beliefs, urban dummy *
 ********************************************************************
 
 *** Looped command, science performance by science beliefs 2015 ***
@@ -575,7 +624,7 @@ putexcel A1 = matrix(analysis, names)
 }
 
 **********************************************************************
-* Table 5-*: School location results, science awareness, urban dummy *
+* Table 6-*: School location results, science awareness, urban dummy *
 **********************************************************************
 
 *** Looped command, science performance by science awareness 2015 ***
